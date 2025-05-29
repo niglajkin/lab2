@@ -4,7 +4,7 @@ import (
 	"flag"
 	"fmt"
 
-	lab2 "github.com/roman-mazur/architecture-lab-2"
+	lab2 "github.com/niglajkin/lab2"
 )
 
 var (
