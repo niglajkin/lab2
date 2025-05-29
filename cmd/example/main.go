@@ -49,3 +49,18 @@ func buildHandler() (*lab2.ComputeHandler, error) {
 
 	return &lab2.ComputeHandler{Input: in, Output: out}, nil
 }
+
+func main() {
+	flag.Parse()
+
+	handler, err := buildHandler()
+	if err != nil {
+		fmt.Fprintln(os.Stderr, "error:", err)
+		os.Exit(1)
+	}
+
+	if err := handler.Compute(); err != nil {
+		fmt.Fprintln(os.Stderr, err)
+		os.Exit(1)
+	}
+}
