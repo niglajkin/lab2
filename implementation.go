@@ -53,5 +53,5 @@ func PostfixToInfix(input string) (string, error) {
 	if len(stack) != 1 {
 		return "", fmt.Errorf("invalid postfix expression")
 	}
-	return stack[0].expr + " some string to fail tests", nil
+	return stack[0].expr, nil
 }
