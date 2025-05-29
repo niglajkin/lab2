@@ -2,13 +2,17 @@ package lab2
 
 import (
 	"encoding/binary"
+	"fmt"
+	"io"
+	"strings"
 	"unicode/utf16"
 )
 
 // ComputeHandler should be constructed with input io.Reader and output io.Writer.
 // Its Compute() method should read the expression from input and write the computed result to the output.
 type ComputeHandler struct {
-	// TODO: Add necessary fields.
+	Input  io.Reader
+	Output io.Writer
 }
 
 func toUTF8(raw []byte) string {
@@ -33,6 +37,22 @@ func toUTF8(raw []byte) string {
 }
 
 func (ch *ComputeHandler) Compute() error {
-	// TODO: Implement.
-	return nil
+	raw, err := io.ReadAll(ch.Input)
+	if err != nil {
+		return err
+	}
+
+	expr := strings.TrimSpace(toUTF8(raw))
+	expr = strings.Trim(expr, "\"")
+
+	if expr == "" {
+		return fmt.Errorf("empty expression")
+	}
+
+	infix, err := PostfixToInfix(expr)
+	if err != nil {
+		return err
+	}
+	_, err = fmt.Fprintln(ch.Output, infix)
+	return err
 }
